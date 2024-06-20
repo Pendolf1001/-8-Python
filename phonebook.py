@@ -1,4 +1,3 @@
-
 def work_with_phonebook():
 
     choice=show_menu()
@@ -21,12 +20,15 @@ def work_with_phonebook():
         elif choice==5:
             last_name=input('lastname ')
             new_number=input('new  number ')
+            change_number(phone_book,last_name,new_number)
             write_txt('phon.txt',phone_book)
-            print(change_number(phone_book,last_name,new_number))
+            
    
         elif choice==6:
-            lastname=input('lastname ')
-            print(delete_by_lastname(phone_book,lastname))
+            last_name=input('lastname ')
+            delete_by_lastname(phone_book,last_name)
+            print(phone_book)
+            write_txt('phon.txt',phone_book)
 
 
         
@@ -82,19 +84,20 @@ def find_by_number(phone_book,number):
 
 def add_user(phone_book):
     user_data=''
-    last_name=input('введите фамилию, в конце поставьте запятую: ')
-    user_data=user_data + last_name
-    last_name=input('введите имя, в конце поставьте запятую: ')
-    user_data=user_data + last_name
-    last_name=input('введите номер телефона, в конце поставьте запятую: ')
-    user_data=user_data + last_name
-    last_name=input('введите описание абонента, БЕЗ ЗАПЯТОЙ В КОНЦЕ: ')
+    last_name=input('введите фамилию,: ')
+    user_data=user_data + last_name +','
+    
+    last_name=input('введите имя: ')
+    user_data=user_data + last_name +','
+    last_name=input('введите номер телефона: ')
+    user_data=user_data + last_name +','
+    last_name=input('введите описание абонента: ')
     user_data=user_data + last_name
 
     fields=['Фамилия', 'Имя', 'Телефон', 'Описание']
     record = dict(zip(fields, user_data.split(',')))
     phone_book.append(record)
-
+    print('Zapisano')
     return phone_book
 
 
@@ -103,8 +106,12 @@ def add_user(phone_book):
 def change_number(phone_book,last_name,new_number):
     for line in phone_book:
         if line .get('Фамилия')== last_name:
+            print("nomer zapisan")
             line ['Телефон']=new_number
-        return phone_book
+            print("nomer zapisan")
+        
+    
+    return phone_book
 
 
 
@@ -122,6 +129,18 @@ def write_txt(filename , phone_book):
 
             phout.write(f'{s[:-1]}\n')
 
+    print('perepisano')
+
+
+def delete_by_lastname(phone_book,last_name):
+    for line in phone_book:
+        if line .get('Фамилия')== last_name:
+            del line ['Фамилия']
+            del line ['Имя']
+            del line ['Телефон']
+            del line ['Описание']
+            print('deleted')
+    return phone_book
 
 
 def print_result(myList):
