@@ -29,6 +29,7 @@ def work_with_phonebook():
             delete_by_lastname(phone_book,last_name)
             print(phone_book)
             write_txt('phon.txt',phone_book)
+            phone_book=read_txt("phon.txt")
 
 
         
@@ -123,9 +124,11 @@ def write_txt(filename , phone_book):
         for i in range(len(phone_book)):
 
             s=''
+            d='\n'
+            
             for v in phone_book[i].values():
-
-                s = s + v + ','
+                if v!=d:
+                    s = s + v + ','
 
             phout.write(f'{s[:-1]}\n')
 
@@ -135,16 +138,18 @@ def write_txt(filename , phone_book):
 def delete_by_lastname(phone_book,last_name):
     for line in phone_book:
         if line .get('Фамилия')== last_name:
-            del line ['Фамилия']
-            del line ['Имя']
-            del line ['Телефон']
-            del line ['Описание']
+            del line['Фамилия']
+            del line['Имя']
+            del line['Телефон']
+            del line['Описание']
             print('deleted')
+    phone_book=[d for d in phone_book if d]
     return phone_book
 
 
 def print_result(myList):
     for item in myList:
+        
         print(item)
 
 work_with_phonebook()
